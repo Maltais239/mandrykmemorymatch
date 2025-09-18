@@ -16,16 +16,18 @@
             background-color: #22162b; /* Very dark purple */
         }
         .container {
-            max-width: 900px;
+            /* Ensures the container fits smaller screens like Chromebooks */
+            max-width: min(95vw, 900px);
         }
         #game-board {
             display: grid;
-            gap: 1.5rem;
+            /* Reduced gap between cards */
+            gap: 1rem;
         }
         /* New grid styles */
         #game-board.small-grid {
-            /* For 12 cards, creates a 4x3 grid on larger screens */
-            grid-template-columns: repeat(4, 1fr);
+            /* For 12 cards, creates a 6x2 grid on larger screens */
+            grid-template-columns: repeat(6, 1fr);
         }
         #game-board.large-grid {
             /* For 24 cards, creates a 6x4 grid on larger screens */
@@ -34,6 +36,10 @@
         
         /* Responsive adjustments for the grid */
         @media (max-width: 850px) {
+            #game-board.small-grid {
+                /* On tablets, use a 4x3 grid */
+                grid-template-columns: repeat(4, 1fr);
+            }
             #game-board.large-grid {
                 /* On tablets, use a 4x6 grid */
                 grid-template-columns: repeat(4, 1fr);
@@ -79,7 +85,8 @@
             align-items: center;
             justify-content: center;
             flex-direction: column;
-            padding: 1rem;
+            /* Reduced padding inside cards */
+            padding: 0.75rem;
             overflow: hidden;
         }
         .card-front {
@@ -141,9 +148,9 @@
         }
     </style>
 </head>
-<body class="p-4 sm:p-8">
+<body class="p-4 sm:p-6">
     <div class="container mx-auto">
-        <h1 class="text-4xl sm:text-5xl font-extrabold text-center text-[#e54f6d] mb-4">
+        <h1 class="text-3xl sm:text-4xl font-extrabold text-center text-[#e54f6d] mb-4">
             Symbol of Alberta Memory Matching Game
         </h1>
         <p class="text-center text-[#f8c630] mb-6 max-w-2xl mx-auto">
