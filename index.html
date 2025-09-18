@@ -20,12 +20,39 @@
         }
         #game-board {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
             gap: 1.5rem;
         }
+        /* New grid styles */
+        #game-board.small-grid {
+            /* For 12 cards, creates a 4x3 grid on larger screens */
+            grid-template-columns: repeat(4, 1fr);
+        }
+        #game-board.large-grid {
+            /* For 24 cards, creates a 6x4 grid on larger screens */
+            grid-template-columns: repeat(6, 1fr);
+        }
+        
+        /* Responsive adjustments for the grid */
+        @media (max-width: 850px) {
+            #game-board.large-grid {
+                /* On tablets, use a 4x6 grid */
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+        @media (max-width: 640px) {
+            #game-board.small-grid {
+                /* On phones, use a 3x4 grid */
+                grid-template-columns: repeat(3, 1fr);
+            }
+            #game-board.large-grid {
+                /* On phones, use a 3x8 grid */
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
         .card {
             background-color: transparent;
-            height: 250px;
+            aspect-ratio: 3 / 4; /* Replaced fixed height for better responsiveness */
             perspective: 1000px;
             cursor: pointer;
         }
@@ -448,6 +475,15 @@
             function startGame() {
                 gameMode = parseInt(modeSelector.value, 10);
                 const size = parseInt(sizeSelector.value, 10);
+
+                // Add/remove classes for dynamic grid styling
+                gameBoard.classList.remove('small-grid', 'large-grid');
+                if (size === 6) {
+                    gameBoard.classList.add('small-grid');
+                } else {
+                    gameBoard.classList.add('large-grid');
+                }
+
                 const shuffledSymbols = [...allSymbols];
                 shuffle(shuffledSymbols);
                 currentSymbolSet = shuffledSymbols.slice(0, size);
